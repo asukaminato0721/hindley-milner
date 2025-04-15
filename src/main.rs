@@ -281,14 +281,14 @@ fn main() {
     let expr1 = Expr::Int(42);
     match infer_top_level(&expr1) {
         Ok(t) => println!("Expr: Int(42), Inferred Type: {}", t), // int
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     // Example 2: Simple string
     let expr2 = Expr::Str("hello".to_string());
     match infer_top_level(&expr2) {
         Ok(t) => println!("Expr: Str(\"hello\"), Inferred Type: {}", t), // string
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     println!("\n--- Lambda Examples ---");
@@ -298,7 +298,7 @@ fn main() {
     let expr3 = Expr::Lambda("x".to_string(), Box::new(Expr::Var("x".to_string())));
     match infer_top_level(&expr3) {
         Ok(t) => println!(r#"Expr: \x -> x, Inferred Type: {t}"#),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     // Example 4: Constant function: \y -> 5
@@ -306,7 +306,7 @@ fn main() {
     let expr4 = Expr::Lambda("y".to_string(), Box::new(Expr::Int(5)));
     match infer_top_level(&expr4) {
         Ok(t) => println!("Expr: \\y -> 5, Inferred Type: {}", t),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     // Example 5: Function application: (\x -> x) (5)
@@ -320,7 +320,7 @@ fn main() {
     );
     match infer_top_level(&expr5) {
         Ok(t) => println!("Expr: (\\x -> x)(5), Inferred Type: {}", t),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     // Example 6: Function application: (\y -> "hello") (10)
@@ -334,7 +334,7 @@ fn main() {
     );
     match infer_top_level(&expr6) {
         Ok(t) => println!(r#"Expr: (\y -> "hello")(10), Inferred Type: {t}"#),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     println!("\n--- Let Binding Examples ---");
@@ -355,7 +355,7 @@ fn main() {
     );
     match infer_top_level(&expr7) {
         Ok(t) => println!("Expr: let id = \\x -> x in id(5), Inferred Type: {}", t),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     // Example 8: let five = 5 in (\f -> f(five)) (\y -> "done")
@@ -385,7 +385,7 @@ fn main() {
             r#"Expr: let five = 5 in (\f -> f(five)) (\y -> "done"), Inferred Type: {}"#,
             t
         ),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 
     println!("\n--- Error Example ---");
@@ -394,6 +394,6 @@ fn main() {
     let expr9 = Expr::App(Box::new(Expr::Int(10)), Box::new(Expr::Int(5)));
     match infer_top_level(&expr9) {
         Ok(t) => println!("Expr: 10(5), Inferred Type: {}", t),
-        Err(e) => println!("Expr: 10(5), Error: {}", e), // Expected: NotAFunction or TypeMismatch
+        Err(e) => eprintln!("Expr: 10(5), Error: {}", e), // Expected: NotAFunction or TypeMismatch
     }
 }
