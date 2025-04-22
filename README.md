@@ -1,3 +1,8 @@
-# Try to learn Hindley-Milner
+## Some algo in cs242
 
-go to <https://idx.google.com/import> to interactive.
+```
+cargo run -p lambda
+cargo run -p a-algo
+cargo test -p ski
+cargo run -p hindley-milner
+```
